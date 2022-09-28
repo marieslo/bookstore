@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+  <div class="row">
+    <p>На ваш e-mail отправлен код подтверждения</p>
+  </div>
+
+<a href="{% url 'confirm' %}">Код подтверждения:</a>
+{% endblock content %}
