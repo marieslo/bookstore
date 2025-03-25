@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block modal_cart %}
+    {% include "includes/cart_button.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card mb-4 custom-shadow">
+        <div class="row">
+            <!-- Thumbnails -->
+            <div class="col-md-4">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}            
+
+            </div>
+            <div class="col-md-4">
+                <p class="product_id mt-3">id: {{ product.display_id }}</p>
+            </div>
+        </div>
+
+        <!-- View enlarged image in modal -->
+        <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModal1Label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="imageModal1Label">{{ product.name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ product.image.url }}</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Description -->
+        <div class="card-body">
+            <p class="card-text">Price: $<strong>{{ product.sell_price }}</strong></p>
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <a href="{% url "cart:cart_add" %}" class="btn btn-dark add-to-cart" data-product-id="{{ product.id }}">
+                {% csrf_token %}
+                Add to Cart
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

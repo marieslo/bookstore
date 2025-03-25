@@ -1,0 +1,170 @@
+[
+    {
+        "model": "goods.products",
+        "pk": 1,
+        "fields": {
+            "name": "1984",
+            "slug": "1984",
+            "description": "A dystopian novel by George Orwell.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "15.00",
+            "discount": "2",
+            "quantity": 10,
+            "category": 2
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 2,
+        "fields": {
+            "name": "To Kill a Mockingbird",
+            "slug": "to-kill-a-mockingbird",
+            "description": "Harper Lee's novel about race and justice.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "12.00",
+            "discount": "3",
+            "quantity": 7,
+            "category": 2
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 3,
+        "fields": {
+            "name": "Great Gatsby",
+            "slug": "the-great-gatsby",
+            "description": "F. Scott Fitzgerald's novel about the American Dream.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "20.00",
+            "discount": "5",
+            "quantity": 5,
+            "category": 2
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 4,
+        "fields": {
+            "name": "Moby Dick",
+            "slug": "moby-dick",
+            "description": "Herman Melville's classic novel about Captain Ahab's obsession.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "18.00",
+            "discount": "3",
+            "quantity": 11,
+            "category": 2
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 5,
+        "fields": {
+            "name": "Pride & Prejudice",
+            "slug": "pride-and-prejudice",
+            "description": "Jane Austen's novel about manners and marriage.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "35.00",
+            "discount": "4",
+            "quantity": 8,
+            "category": 2
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 6,
+        "fields": {
+            "name": "Harry Potter",
+            "slug": "harry-potter",
+            "description": "The first book in J.K. Rowling's magical series.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "25.00",
+            "discount": "6",
+            "quantity": 8,
+            "category": 4
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 7,
+        "fields": {
+            "name": "Catcher in the Rye",
+            "slug": "catcher-in-the-rye",
+            "description": "J.D. Salinger's novel about teenage alienation.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "10.00",
+            "discount": "1",
+            "quantity": 6,
+            "category": 2
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 8,
+        "fields": {
+            "name": "Fellowship of the Ring",
+            "slug": "fellowship-of-the-ring",
+            "description": "The first volume of Tolkien's epic fantasy series.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "22.00",
+            "discount": "2",
+            "quantity": 5,
+            "category": 2
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 9,
+        "fields": {
+            "name": "Brave New World",
+            "slug": "brave-new-world",
+            "description": "A dystopian novel about conformity and happiness.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "30.00",
+            "discount": "3",
+            "quantity": 35,
+            "category": 2
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 10,
+        "fields": {
+            "name": "The Hobbit",
+            "slug": "the-hobbit",
+            "description": "Tolkien's fantasy novel about Bilbo Baggins.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "15.00",
+            "discount": "5",
+            "quantity": 17,
+            "category": 2
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 11,
+        "fields": {
+            "name": "Lion, Witch, Wardrobe",
+            "slug": "lion-witch-wardrobe",
+            "description": "C.S. Lewis' book from The Chronicles of Narnia.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "18.00",
+            "discount": "1",
+            "quantity": 17,
+            "category": 4
+        }
+    },
+    {
+        "model": "goods.products",
+        "pk": 12,
+        "fields": {
+            "name": "The Alchemist",
+            "slug": "the-alchemist",
+            "description": "A novel about a shepherd's journey to find his legend.",
+            "image": "images/goods/The_Catcher_in_the_Rye_(1951,_first_edition_cover).jpg",
+            "price": "28.00",
+            "discount": "5",
+            "quantity": 10,
+            "category": 3
+        }
+    }
+]
