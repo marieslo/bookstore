@@ -9,45 +9,52 @@
 <div class="container mt-5">
     <div class="card mb-4 custom-shadow">
         <div class="row">
-            <!-- Thumbnails -->
+            <!-- Product Image Thumbnails -->
             <div class="col-md-4">
                 {% if product.image %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
-            {% else %}
-                <p>No image available</p>
-            {% endif %}            
-
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid" data-bs-toggle="modal" data-bs-target="#imageModal1">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
             </div>
-            <div class="col-md-4">
-                <p class="product_id mt-3">id: {{ product.display_id }}</p>
+
+            <!-- Product Information -->
+            <div class="col-md-8">
+                <p class="product_id mt-3">ID: {{ product.display_id }}</p>
+                <p class="card-text">Price: $<strong>{{ product.sell_price }}</strong></p>
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+
+                <!-- Author, Publisher, and Publication Date -->
+                <p><strong>Author:</strong> {{ product.author }}</p>
+                <p><strong>Publisher:</strong> {{ product.publisher }}</p>
+                <p><strong>Publication Date:</strong> {{ product.publication_date|date:"F j, Y" }}</p>
+
+                <!-- Add to Cart Button -->
+                <a href="{% url 'cart:cart_add' %}" class="btn btn-dark add-to-cart" data-product-id="{{ product.id }}">
+                    {% csrf_token %}
+                    Add to Cart
+                </a>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- View enlarged image in modal -->
-        <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModal1Label" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="imageModal1Label">{{ product.name }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>{{ product.image.url }}</p>
-
-                    </div>
-                </div>
+<!-- Modal for Enlarged Image -->
+<div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModal1Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModal1Label">{{ product.name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </div>
-
-        <!-- Product Description -->
-        <div class="card-body">
-            <p class="card-text">Price: $<strong>{{ product.sell_price }}</strong></p>
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text">{{ product.description }}</p>
-            <a href="{% url "cart:cart_add" %}" class="btn btn-dark add-to-cart" data-product-id="{{ product.id }}">
-                {% csrf_token %}
-                Add to Cart
-            </a>
+            <div class="modal-body text-center">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
