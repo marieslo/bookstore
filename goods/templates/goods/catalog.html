@@ -3,7 +3,7 @@
 {% load goods_tags %}
 
 {% block modal_cart %}
-{% include "includes/cart_button.html" %}
+    {% include "includes/cart_button.html" %}
 {% endblock %}
 
 {% block content %}
@@ -58,43 +58,41 @@
         <h2 class="mt-4">No results found for your search</h2>
     {% endif %}
     {% endif %}
+    
     {% for product in goods %}
         <!-- Product Card -->
         <div class="col-lg-4 col-md-6 p-4">
             <div class="card border-primary rounded custom-shadow">
                 {% if product.image %}
-                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-            {% else %}
-                <img src="{% static "deps/images/Not found image.png" %}" class="card-img-top" alt="...">
-            {% endif %}            
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                    <img src="{% static "deps/images/Not found image.png" %}" class="card-img-top" alt="Product Image">
+                {% endif %}            
                 <div class="card-body">
                     <a href="{% url "catalog:product" product.slug %}">
                         <p class="card-title">
                             {% autoescape off %}
                                 {% if product.headline %}
-                                {{product.headline}}
+                                    {{ product.headline }}
                                 {% else %}
-                                {{ product.name }}
+                                    {{ product.name }}
                                 {% endif %}
                             {% endautoescape %}
                         </p>
                     </a>
-                    <p class="card-text">
-                        {% autoescape off %}
-                            {% if product.bodyline %}
-                            {{product.bodyline|truncatechars:100}}
-                            {% else %}
-                            {{ product.description|truncatechars:35 }}
-                            {% endif %}
-                        {% endautoescape %}
-                    </p>
-                    <p class="product_id">id: {{ product.display_id }}</p>
+                    <p class="product_id">ID: {{ product.display_id }}</p>
+
+                    <!-- Book Details: Author, Publisher, Publication Date -->
+                    <p><strong>Author:</strong> {{ product.author }}</p>
+                    <p><strong>Publisher:</strong> {{ product.publisher }}</p>
+                    <p><strong>Publication Date:</strong> {{ product.publication_date|date:"F j, Y" }}</p>
+
                     <div class="d-flex justify-content-between">
 
                         {% if product.discount %}
-                            <p><s>${{product.price}}</s></p>
+                            <p><s>${{ product.price }}</s></p>
                             <p><strong>${{ product.sell_price }}</strong></p>
-                            <span class="badge bg-warning text-dark">- {{ product.discount }}%</span>
+                            <span class="badge bg-warning text-dark">-{{ product.discount }}%</span>
                         {% else %}
                             <p><strong>${{ product.price }}</strong></p>
                         {% endif %}
@@ -118,15 +116,15 @@
             <div class="custom-shadow d-flex">
 
                 <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
-                <a class="page-link" href="{% if page_obj.has_previous %}?{% change_params page=page_obj.previous_page_number %}{% else %}#{% endif %}">Previous</a>
+                    <a class="page-link" href="{% if page_obj.has_previous %}?{% change_params page=page_obj.previous_page_number %}{% else %}#{% endif %}">Previous</a>
                 </li>
 
                 {% for page in page_obj.paginator.page_range %}
-                {% if page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
-                    <li class="page-item {% if page_obj.number == page %} active {% endif %}">
-                        <a class="page-link" href="?{% change_params page=page %}">{{ page }}</a>
-                    </li>
-                {% endif %}
+                    {% if page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
+                        <li class="page-item {% if page_obj.number == page %} active {% endif %}">
+                            <a class="page-link" href="?{% change_params page=page %}">{{ page }}</a>
+                        </li>
+                    {% endif %}
                 {% endfor %}
 
                 <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
