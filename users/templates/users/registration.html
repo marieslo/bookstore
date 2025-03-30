@@ -7,16 +7,22 @@
 
 {% block content %}
 <div class="container mt-5">
+    <style>
+        body, .container, .form-floating, .btn {
+            font-size: 12px;
+        }
+    </style>
+
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6 bg-white p-5 mb-5 mx-2 rounded shadow-sm">
-            <h2 class="text-center mb-4">Register</h2>
+            <h6 class="text-center mb-4">Register</h6>
             <form action="{% url 'user:registration' %}" method="post">
                 {% csrf_token %}
                 <div class="row">
                     <!-- First Name Field -->
                     <div class="col-md-6 mb-4">
                         <div class="form-floating">
-                            <input type="text" class="form-control border-0 shadow-sm rounded-3" id="id_first_name"
+                            <input type="text" class="form-control border-1-gray shadow-sm rounded-3" id="id_first_name"
                                 value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}"
                                 name="first_name" required>
                             <label for="id_first_name" class="form-label">First Name*</label>
@@ -28,7 +34,7 @@
                     <!-- Last Name Field -->
                     <div class="col-md-6 mb-4">
                         <div class="form-floating">
-                            <input type="text" class="form-control border-0 shadow-sm rounded-3" id="id_last_name"
+                            <input type="text" class="form-control border-1-gray shadow-sm rounded-3" id="id_last_name"
                                 value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}"
                                 name="last_name" required>
                             <label for="id_last_name" class="form-label">Last Name*</label>
@@ -40,7 +46,7 @@
                     <!-- Username Field -->
                     <div class="col-md-6 mb-4">
                         <div class="form-floating">
-                            <input type="text" class="form-control border-0 shadow-sm rounded-3" id="id_username"
+                            <input type="text" class="form-control border-1-gray shadow-sm rounded-3" id="id_username"
                                 value="{% if form.username.value %}{{ form.username.value }}{% endif %}"
                                 name="username" required>
                             <label for="id_username" class="form-label">Username*</label>
@@ -52,7 +58,7 @@
                     <!-- Email Field -->
                     <div class="col-md-6 mb-4">
                         <div class="form-floating">
-                            <input type="email" class="form-control border-0 shadow-sm rounded-3" id="id_email"
+                            <input type="email" class="form-control border-1-gray shadow-sm rounded-3" id="id_email"
                                 value="{% if form.email.value %}{{ form.email.value }}{% endif %}"
                                 name="email" required>
                             <label for="id_email" class="form-label">Email*</label>
@@ -64,7 +70,7 @@
                     <!-- Password Field -->
                     <div class="col-md-6 mb-4">
                         <div class="form-floating">
-                            <input type="password" class="form-control border-0 shadow-sm rounded-3" id="id_password1"
+                            <input type="password" class="form-control border-1-gray shadow-sm rounded-3" id="id_password1"
                                 value="{% if form.password1.value %}{{ form.password1.value }}{% endif %}"
                                 name="password1" required>
                             <label for="id_password1" class="form-label">Password*</label>
@@ -76,7 +82,7 @@
                     <!-- Confirm Password Field -->
                     <div class="col-md-6 mb-4">
                         <div class="form-floating">
-                            <input type="password" class="form-control border-0 shadow-sm rounded-3" id="id_password2"
+                            <input type="password" class="form-control border-1-gray shadow-sm rounded-3" id="id_password2"
                                 value="{% if form.password2.value %}{{ form.password2.value }}{% endif %}"
                                 name="password2" required>
                             <label for="id_password2" class="form-label">Confirm Password*</label>
@@ -86,7 +92,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <button type="submit" class="btn btn-dark btn-lg btn-block w-100 mt-4">Register</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block w-100 mt-4">Register</button>
             </form>
         </div>
     </div>
