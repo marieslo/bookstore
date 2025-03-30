@@ -7,9 +7,15 @@
 
 {% block content %}
 <div class="container mt-5">
+    <style>
+        body, .container, .form-floating, .btn {
+            font-size: 12px;
+        }
+    </style>
+    
     <div class="row justify-content-center">
         <div class="col-md-6 bg-white p-5 mb-5 mx-3 rounded shadow-sm">
-            <h2 class="text-center mb-4">Login</h2>
+            <h6 class="text-center mb-4">Login</h6>
             <form action="{% url 'user:login' %}" method="post">
                 {% csrf_token %}
                 {% if request.GET.next %}
@@ -19,7 +25,7 @@
                 <!-- Username Field -->
                 <div class="mb-4">
                     <div class="form-floating">
-                        <input type="text" class="form-control border-0 shadow-sm rounded-3" 
+                        <input type="text" class="form-control border-1-gray shadow-sm rounded-3" 
                                value="{% if form.username.value %}{{ form.username.value }}{% endif %}"
                                name="username" id="id_username" required>
                         <label for="id_username">Username</label>
@@ -32,7 +38,7 @@
                 <!-- Password Field -->
                 <div class="mb-4">
                     <div class="form-floating">
-                        <input type="password" class="form-control border-0 shadow-sm rounded-3"
+                        <input type="password" class="form-control border-1-gray shadow-sm rounded-3"
                                name="password" id="id_password" required>
                         <label for="id_password">Password</label>
                     </div>
@@ -42,12 +48,12 @@
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="btn btn-dark btn-lg btn-block w-100 mt-4">Login</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block w-100 mt-4">Login</button>
             </form>
 
             <!-- Links -->
             <div class="mt-3 text-center">
-                <a href="{% url 'user:registration' %}">Create an Account</a>
+                <a href="{% url 'user:registration' %}" class="create-account">Create an Account</a>
             </div>
         </div>
     </div>

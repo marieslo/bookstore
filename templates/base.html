@@ -16,57 +16,71 @@
     {% endblock %}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>{{ title }}</title>
+    <style>
+      
+    </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <nav class="custom-navbar navbar navbar-expand-lg navbar-light sticky-top">
             <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                <!-- Small Screen Menu -->
+                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+    
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="d-flex" role="search" action="{% url 'catalog:search' %}" method="get">
+                    <!-- Search Form for Mobile -->
+                    <form class="custom-search-form d-flex align-items-center mx-lg-3" role="search"
+                        action="{% url 'catalog:search' %}" method="get">
                         <div class="input-group">
-                            <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
-                            <button class="search-button" type="submit">
+                            <input class="custom-search-input form-control" type="search" name="q" placeholder="Search"
+                                aria-label="Search">
+                            <button class="custom-search-button" type="submit">
                                 <span class="material-icons">search</span>
                             </button>
                         </div>
                     </form>
-                    
-                    <div class="row mt-3">
-                        <div class="dropdown mb-2">
-                            <button class="btn btn-secondary dropdown-toggle btn-light" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Catalog
-                                <span class="material-icons">grid_view</span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                {% cache 60 catalog_categories %}
-                                {% tag_categories as categories %}
-                                {% for category in categories %}
-                                <li><a class="dropdown-item" href="{% url 'catalog:index' category.slug %}">{{category.name}}</a></li>
-                                {% endfor %}
-                                {% endcache %}
-                            </ul>
-                        </div>
-                        {% block modal_cart %}{% endblock %}
+    
+   
+                    <!-- Modal Cart Section -->
+                    {% block modal_cart %}{% endblock %}
+                    <div class="dropdown ms-3 d-flex align-items-center">
+                        <span class="material-icons" style="vertical-align: middle; font-size: 18px;">menu_book</span>
+                        <button class="btn custom-dropdown-btn ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Catalog
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% cache 60 catalog_categories %}
+                            {% tag_categories as categories %}
+                            {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'catalog:index' category.slug %}">{{ category.name }}</a></li>
+                            {% endfor %}
+                            {% endcache %}
+                        </ul>
                     </div>
-
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    
+                    <!-- User Authentication Links -->
+                    <ul class="navbar-nav ms-auto">
                         {% if not user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{% url 'user:login' %}">Login</a>
+                            <a class="nav-link nav-btn d-flex align-items-center" href="{% url 'user:login' %}">
+                                <span class="material-icons" style="font-size: 20px; margin-right: 10px;">login</span> Login
+                            </a>
                         </li>
                         {% else %}
-                        <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile Settings</a></li>
-                        {% if user.is_admin or user.is_staff %}
-                        <li><a class="dropdown-item" href="{% url 'admin:index' %}">Admin Panel</a></li>
-                        {% endif %}
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'user:logout' %}">Logout</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-btn d-flex align-items-center" href="{% url 'user:profile' %}">
+                                <span class="material-icons" style="font-size: 20px; margin-right: 10px;">account_circle</span> My Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-btn d-flex align-items-center" href="{% url 'user:logout' %}">
+                                <span class="material-icons" style="font-size: 20px; margin-right: 10px;">logout</span> Logout
+                            </a>
+                        </li>
                         {% endif %}
                     </ul>
                 </div>
@@ -75,7 +89,7 @@
     </header>
 
     <section class="flex-grow-1">
-        <div class="container">
+        <div class="container z-100">
             <div class="row mt-4">
                 <div class="col-lg-2">
                 </div>
@@ -86,7 +100,9 @@
             </div>
         </div>
     </section>
-    <footer>Images are from</footer>
+
+    <footer>The covers of the books are from Wikipedia</footer>
+
     <script src="{% static 'deps/js/jquery/jquery-3.7.0.min.js' %}"></script>
     <script src="{% static 'deps/js/jquery-ajax.js' %}"></script>
     <script src="{% static 'deps/js/bootstrap/bootstrap.bundle.min.js' %}"></script>

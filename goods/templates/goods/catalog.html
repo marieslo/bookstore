@@ -7,134 +7,106 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <!-- Filter Form -->
-    <div class="dropdown mb-4">
-        <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Filters
-        </button>
-
-        <form action="{% if request.GET.q %}{% url 'catalog:search' %}{% else %}{% url 'catalog:index' slug_url %}{% endif %}" method="get" class="dropdown-menu bg-dark p-3" data-bs-theme="dark">
-            <div class="form-check text-white mx-3">
-                <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault" value="on" {% if request.GET.on_sale == 'on' %}checked{% endif %}>
-                {% if request.GET.q %}
-                    <input type="hidden" name="q" value="{{ request.GET.q }}">
-                {% endif %}
-                <label class="form-check-label" for="flexCheckDefault">
-                    On Sale
-                </label>
-            </div>
-
-            <p class="text-white mx-3 mt-3">Sort By:</p>
-            <div class="form-check text-white mx-3">
-                <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault1" value="default"
-                {% if not request.GET.order_by or request.GET.order_by == 'default' %}checked{% endif %}>
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Default
-                </label>
-            </div>
-            <div class="form-check text-white mx-3">
-                <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault2" value="price" 
-                {% if request.GET.order_by == 'price' %}checked{% endif %}>
-                <label class="form-check-label" for="flexRadioDefault2">
-                    From Low to High
-                </label>
-            </div>
-            <div class="form-check text-white mx-3">
-                <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault3" value="-price"
-                {% if request.GET.order_by == '-price' %}checked{% endif %}>
-                <label class="form-check-label" for="flexRadioDefault3">
-                    From High to Low
-                </label>
-            </div>
-            <button type="submit" class="btn btn-primary mx-3 mt-3 w-100">Apply</button>
-        </form>
-    </div>
-
-    {% if request.GET.q %}
-    <h3 class="mt-4">Search Results for "{{ request.GET.q }}"</h3>
-    {% if not goods %}
-        <h2 class="mt-4">No results found for your search</h2>
-    {% endif %}
-    {% endif %}
-    
-    <div class="row row-cols-1 row-cols-md-3 g-3">
-        {% for product in goods %}
-        <!-- Product Card -->
-        <div class="col mb-4">
-            <div class="card border-0 rounded-lg custom-shadow product-card">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                {% else %}
-                <p class="text-muted">No image available</p>
-                {% endif %}
-                <div class="card-body d-flex flex-column">
-                    <a href="{% url 'catalog:product' product.slug %}" style="text-decoration: none;">
-                        <p class="card-title" style="font-size: 1rem; color: #333; font-weight: 500;">
-                            {% autoescape off %}
-                                {% if product.headline %}
-                                    {{ product.headline }}
-                                {% else %}
-                                    {{ product.name }}
-                                {% endif %}
-                            {% endautoescape %}
-                        </p>
-                    </a>
-                    <p class="card-text mb-2" style="font-size: 0.85rem; color: #555;">
-                        {% autoescape off %}
-                            {% if product.bodyline %}
-                                {{ product.bodyline|truncatechars:80 }}
-                            {% else %}
-                                {{ product.description|truncatechars:40 }}
-                            {% endif %}
-                        {% endautoescape %}
-                    </p>
-
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        {% if product.discount %}
-                            <p><s>${{ product.price|floatformat:0 }}</s></p>
-                            <p><strong>${{ product.sell_price|floatformat:0 }}</strong></p>
-                            <span class="badge bg-warning text-dark">-{{ product.discount|floatformat:0 }}%</span>
-                        {% else %}
-                            <p><strong>${{ product.price|floatformat:0 }}</strong></p>
+<div class="container">
+    <!-- Filters and Pagination -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-4">
+            <div class="card p-3 bg-light shadow-sm">
+                <h5 class="text-dark d-flex align-items-center">
+                    <span class="material-icons me-2" style="font-size: 12px;">filter_list</span>Filters
+                </h5>
+                <form action="?{% if request.GET %}{{ request.GET.urlencode }}{% endif %}" method="get">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="on_sale" id="on_sale" value="on" {% if request.GET.on_sale == 'on' %}checked{% endif %}>
+                        {% if request.GET.q %}
+                            <input type="hidden" name="q" value="{{ request.GET.q }}">
                         {% endif %}
-
-                        <a href="{% url 'cart:cart_add' %}" class="btn add-to-cart d-flex align-items-center border-0" data-product-id="{{ product.id }}">
-                            {% csrf_token %}
-                            <span class="material-icons" style="font-size: 28px;">add_shopping_cart</span>
-                        </a>
+                        <label class="form-check-label" for="on_sale" style="font-size: 12px;">On Sale</label>
                     </div>
-                </div>
+                    <p class="mt-3" style="font-size: 12px;">Sort By:</p>
+                    <select class="form-select" name="order_by" style="font-size: 12px;">
+                        <option value="default" {% if not request.GET.order_by or request.GET.order_by == 'default' %}selected{% endif %}>Default</option>
+                        <option value="price" {% if request.GET.order_by == 'price' %}selected{% endif %}>Price: Low to High</option>
+                        <option value="-price" {% if request.GET.order_by == '-price' %}selected{% endif %}>Price: High to Low</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary mt-3 w-100" style="font-size: 12px;">Apply</button>
+                </form>
             </div>
         </div>
-        {% endfor %}
+        <ul class="pagination justify-content-center mb-0">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link rounded-pill" href="?{% change_params page=1 %}" title="First Page">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link rounded-pill" href="?{% change_params page=page_obj.previous_page_number %}" title="Previous Page">
+                        <span>&laquo;</span> Prev
+                    </a>
+                </li>
+            {% endif %}
+        
+            {% for page in page_obj.paginator.page_range %}
+                {% if page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
+                    <li class="page-item {% if page_obj.number == page %} active {% endif %}">
+                        <a class="page-link rounded-pill" href="?{% change_params page=page %}" title="Page {{ page }}">
+                            {{ page }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link rounded-pill" href="?{% change_params page=page_obj.next_page_number %}" title="Next Page">
+                        Next <span>&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link rounded-pill" href="?{% change_params page=page_obj.paginator.num_pages %}" title="Last Page">Last</a>
+                </li>
+            {% endif %}
+        </ul>      
+    </div>
+    <div class="row">
+        <!-- Product Grid -->
+        <div class="col-12">
+            {% if request.GET.q and no_results %}
+            <h6 class="fst-italic text-center" style="font-size: 14px;">We didn't find what you were looking for.<br>Please check out other great items we have below.</h6>
+        {% endif %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                {% for product in goods %}
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-lg rounded-lg text-center">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top p-2" alt="{{ product.name }}" style="object-fit: cover; aspect-ratio: 1/1;">
+                        {% else %}
+                            <div class="text-muted py-5">No image available</div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <a href="{% url 'catalog:product' product.slug %}" class="text-decoration-none text-dark product-link">
+                                <h6 class="fw-bold">{{ product.headline|default:product.name|safe }}</h6>
+                            </a>                            
+                            <p class="text-muted">{{ product.bodyline|default:product.description|truncatechars:80 }}</p>
+                            <div class="d-flex flex-column align-items-center">
+                                {% if product.discount %}
+                                    <h6 class="text-muted"><s>${{ product.price|floatformat:0 }}</s></h6>
+                                    <h6 class="fw-bold">${{ product.sell_price|floatformat:0 }}</h6>
+                                    <h6 class="badge bg-warning text-dark">-{{ product.discount|floatformat:0 }}%</h6>
+                                {% else %}
+                                    <h6 class="fw-bold">${{ product.price|floatformat:0 }}</h6>
+                                {% endif %}
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a href="{% url 'cart:cart_add' %}" class="btn btn-primary add-to-cart d-flex align-items-center justify-content-center" data-product-id="{{ product.id }}">
+                                    {% csrf_token %}
+                                    Add to Cart <span class="material-icons ms-2" style="font-size: 20px;">add_shopping_cart</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
-
-<!-- Pagination -->
-{% if goods %}
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center my-4">
-            <div class="custom-shadow d-flex">
-
-                <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
-                    <a class="page-link" href="{% if page_obj.has_previous %}?{% change_params page=page_obj.previous_page_number %}{% else %}#{% endif %}">Previous</a>
-                </li>
-
-                {% for page in page_obj.paginator.page_range %}
-                    {% if page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
-                        <li class="page-item {% if page_obj.number == page %} active {% endif %}">
-                            <a class="page-link" href="?{% change_params page=page %}">{{ page }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-
-                <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
-                    <a class="page-link" href="{% if page_obj.has_next %}?{% change_params page=page_obj.next_page_number %}{% else %}#{% endif %}">Next</a>
-                </li>
-            </div>
-        </ul>
-    </nav>
-{% endif %}
 {% endblock %}

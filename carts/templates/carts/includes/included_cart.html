@@ -2,36 +2,36 @@
 
 <div class="card mb-4 text-bg-light shadow-lg">
     {% for cart in carts %}
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h6 class="card-title mb-0" style="font-size: 1.25rem; font-weight: 600;">{{ cart.product.name }}</h6>
+        <div class="card-header d-flex justify-content-between align-items-center py-2">
+            <h6 class="card-title mb-0" style="font-size: 1rem; font-weight: 600;">{{ cart.product.name }}</h6>
             <div class="text-center">
                 <a href="{% url 'cart:cart_remove' %}" class="remove-from-cart" data-cart-id="{{ cart.id }}">
                     {% csrf_token %}
-                    <span class="material-icons" style="cursor: pointer; color: black;">delete</span>
+                    <span class="material-icons" style="cursor: pointer; color: black; font-size: 1.25rem;">delete</span>
                 </a>
             </div>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">
+            <li class="list-group-item py-2">
                 <div class="row align-items-center">
                     <!-- Quantity Controls -->
                     <div class="col-auto">
                         <div class="input-group">
-                            <span class="input-group-btn rounded-left">
-                                <button type="button" class="btn btn-dark btn-sm decrement" 
+                            <span class="input-group-btn align-center">
+                                <button type="button" class="btn btn-primary btn-sm decrement" 
                                         data-cart-id="{{ cart.id }}" 
                                         data-cart-change-url="{% url 'cart:cart_change' %}">
                                     {% csrf_token %}
-                                    <span class="material-icons">remove</span>
+                                    <span class="material-icons" style="font-size: 10px;">remove</span>
                                 </button>
                             </span>
-                            <input type="text" class="form-control number" value="{{ cart.quantity }}" readonly style="max-width: 100px; width: 100%;">
+                            <input type="text" class="form-control number" value="{{ cart.quantity }}" readonly style="max-width: 80px;">
                             <span class="input-group-btn rounded-right">
-                                <button type="button" class="btn btn-dark btn-sm increment" 
+                                <button type="button" class="btn btn-primary btn-sm increment" 
                                         data-cart-id="{{ cart.id }}" 
                                         data-cart-change-url="{% url 'cart:cart_change' %}">
                                     {% csrf_token %}
-                                    <span class="material-icons">add</span>
+                                    <span class="material-icons" style="font-size: 10px;">add</span>
                                 </button>
                             </span>
                         </div>
@@ -40,10 +40,10 @@
                     <!-- Prices in a Row -->
                     <div class="col d-flex justify-content-between align-items-center">
                         <div class="text-center">
-                            <p class="mb-0" style="font-size: 1rem;">x {{ cart.product.sell_price }}</p>
+                            <p class="mb-0" style="font-size: 14px">x {{ cart.product.sell_price }}</p>
                         </div>
                         <div class="text-center">
-                            <strong style="font-size: 1.1rem;">${{ cart.products_price }}</strong>
+                            <stron  style="font-size: 14px"g>${{ cart.products_price }}</strong>
                         </div>
                     </div>
                 </div>
@@ -54,17 +54,17 @@
 
 <!-- Total Price Card -->
 <div class="card mb-4 shadow-lg">
-    <h6 class="card-footer d-flex justify-content-between align-items-center" style="font-size: 1.25rem;">
-        <p class="mb-0">Total: <strong>{{ carts.total_quantity }}</strong> item(s) for a total of</p>
-        <div class="mb-0"><strong style="font-size: 1.4rem;">${{ carts.total_price }}</strong></div>
+    <h6 class="card-footer d-flex justify-content-between align-items-center py-2">
+        <p class="mb-0" style="font-size: 14px">Total: <strong>{{ carts.total_quantity }}</strong> item(s) for a total of</p>
+        <div class="mb-0"><strong style="font-size: 14px">${{ carts.total_price }}</strong></div>
     </h6>
 </div>
 
 <!-- Place Order Button -->
 {% if carts and not order %}
     <h6>
-        <a class="btn btn-dark w-100 text-center mt-3" href="{% url 'orders:create_order' %}" style="font-size: 1.25rem;">
-        Place Order
+        <a class="btn btn-primary w-100 text-center mt-3" href="{% url 'orders:create_order' %}">
+            Place Order
         </a>
     </h6>
 {% endif %}
