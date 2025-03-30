@@ -47,7 +47,7 @@ class UserLoginView(LoginView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Home - Login'
+        context['title'] = 'Login'
         return context
 
 
@@ -72,7 +72,7 @@ class UserRegistrationView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Home - Registration'
+        context['title'] = 'Registration'
         return context
 
 
@@ -94,7 +94,7 @@ class UserProfileView(LoginRequiredMixin, CacheMixin, UpdateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Home - Profile'
+        context['title'] = 'Profile'
 
         # Orders request can be moved to a separate method in this controller
         orders = Order.objects.filter(user=self.request.user).prefetch_related(
@@ -113,7 +113,7 @@ class UserCartView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Home - Cart'
+        context['title'] = 'Cart'
         return context
 
 

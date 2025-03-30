@@ -7,82 +7,63 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="row">
-        <!-- Product Image Thumbnails -->
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="product-image">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow" style="height: 300px; object-fit: cover;" data-bs-toggle="modal" data-bs-target="#imageModal1">
-                {% else %}
-                    <p class="text-muted">No image available</p>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Product Information -->
-        <div class="col-md-6 col-lg-8">
-            <div class="card h-300 border-1-black shadow-sm d-flex">
-                <div class="card-body d-flex flex-column">
-                    <!-- Product Name -->
-                    <h3 class="card-title" style="font-size: 1.75rem; font-weight: bold;">{{ product.name }}</h3>
-
-                    <!-- Product Description -->
-                    <p class="card-text mb-3" style="font-size: 1rem; color: #555;">{{ product.description }}</p>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card border-0 rounded-lg shadow-sm p-4">
+                <div class="row align-items-center">
+                    <!-- Product Image Inside Card -->
+                    <div class="col-md-5 d-flex justify-content-center">
+                        <div class="product-image">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow" 
+                                     style="height: 300px; width: 100%; object-fit: cover; cursor: pointer;"
+                                     data-bs-toggle="modal" data-bs-target="#imageModal1">
+                            {% else %}
+                                <p class="text-muted">No image available</p>
+                            {% endif %}
+                        </div>
+                    </div>
                     
-                   
+                    <!-- Product Information -->
+                    <div class="col-md-7 d-flex flex-column">
+                        <div class="card-body">
+                            <h3 class="card-title fw-bold text-center text-md-start">{{ product.name }}</h3>
+                            <p class="card-text text-muted text-start text-md-start">{{ product.description }}</p>
 
-                    <!-- Details Grid -->
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="detail-box">
-                                <i class="bi bi-person-fill" style="font-size: 1.25rem;"></i>
-                                <p class="mb-0" style="font-size: 1rem; font-weight: bold;">Author:</p>
-                                <p class="text-muted" style="font-size: 0.9rem;">{{ product.author }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="detail-box">
-                                <i class="bi bi-building" style="font-size: 1.25rem;"></i>
-                                <p class="mb-0" style="font-size: 1rem; font-weight: bold;">Publisher:</p>
-                                <p class="text-muted" style="font-size: 0.9rem;">{{ product.publisher }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="detail-box">
-                                <i class="bi bi-calendar-event" style="font-size: 1.25rem;"></i>
-                                <p class="mb-0" style="font-size: 1rem; font-weight: bold;">Publication Date:</p>
-                                <p class="text-muted" style="font-size: 0.9rem;">{{ product.publication_date|date:"F j, Y" }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="detail-box">
-                                <i class="bi bi-cash-stack" style="font-size: 1.25rem;"></i>
-                        
-                                <div class="price-section mb-3">
+                            <!-- Product Details -->
+                            <div class="row g-3 text-start">
+                                <div class="col-6">
+                                    <p class="fw-bold mb-1">Author:</p>
+                                    <p class="text-muted mb-2">{{ product.author }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="fw-bold mb-1">Publisher:</p>
+                                    <p class="text-muted mb-2">{{ product.publisher }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="fw-bold mb-1">Publication Date:</p>
+                                    <p class="text-muted mb-2">{{ product.publication_date|date:"F j, Y" }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="fw-bold mb-1">Price:</p>
                                     {% if product.discount %}
-                                        <div class="mb-2">
-                                            <p class="text-muted" style="text-decoration: line-through; margin-bottom: 0;">${{ product.price }}</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <p class="text-danger" style="font-weight: bold; margin-bottom: 0;">${{ product.sell_price }}</p>
-                                        </div>
+                                        <h6 class="text-muted mb-0" style="text-decoration: line-through;">${{ product.price }}</h6>
+                                        <h6 class="fw-bold">${{ product.sell_price }}</h6>
                                     {% else %}
-                                        <div class="mb-2">
-                                            <p class="text-primary" style="font-weight: bold; margin-bottom: 0;">${{ product.price }}</p>
-                                        </div>
+                                        <p class="text-primary fw-bold">${{ product.price }}</p>
                                     {% endif %}
                                 </div>
                             </div>
-                        </div>                        
-
-                    <!-- Add to Cart Button -->
-                    <a href="{% url 'cart:cart_add' %}" class="btn btn-dark add-to-cart" data-product-id="{{ product.id }}" style="font-size: 1rem; width: 100%;">
-                        {% csrf_token %}
-                        Add to Cart
-                    </a>
+                            
+                            <!-- Add to Cart Button -->
+                            <div class="d-flex justify-content-center mt-3">
+                                <a href="{% url 'cart:cart_add' %}" class="btn btn-primary add-to-cart d-flex align-items-center justify-content-center" data-product-id="{{ product.id }}">
+                                    {% csrf_token %}
+                                    Add to Cart <span class="material-icons ms-2" style="font-size: 20px;">add_shopping_cart</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,7 +75,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="imageModal1Label" style="font-size: 1.5rem;">{{ product.name }}</h5>
+                <h5 class="modal-title" id="imageModal1Label">{{ product.name }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
