@@ -7,8 +7,8 @@ This project allows users to browse books, add them to a cart, place orders, and
 
 Before running the project, ensure you have the following installed:
 
-- Python 3.8+
-- Django 4.2.7+
+- Python
+- Django
 - PostgreSQL
 - `pip` (for installing dependencies)
 
