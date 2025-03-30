@@ -1,4 +1,4 @@
-# Bookstore Project
+# Bookstore
 
 Welcome to the **Bookstore** project, a Django-based web application for managing books, users, orders, and carts. The application uses PostgreSQL as its database, and it’s built to be fully customizable with a modular structure, including components for goods management, user authentication, orders, and more.
 
