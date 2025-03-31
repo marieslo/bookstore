@@ -28,4 +28,4 @@ EXPOSE $PORT
 ENV DJANGO_SETTINGS_MODULE=app.settings
 
 # Use Gunicorn to serve the app, binding to the dynamic port
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app.wsgi:application"]
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:$PORT app.wsgi:application"]
