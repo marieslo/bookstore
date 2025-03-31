@@ -4,11 +4,11 @@ from dotenv import load_dotenv  # type: ignore
 from urllib.parse import urlparse
 from django.core.exceptions import ImproperlyConfigured
 
-# Load environment variables from .env file
-load_dotenv()
 
-# Define base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv(dotenv_path=BASE_DIR / '.env')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -73,19 +73,19 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 if DATABASE_URL is None:
     raise ImproperlyConfigured("DATABASE_URL environment variable is not set")
 
-
 url = urlparse(DATABASE_URL)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': url.path[1:],  # Remove the leading '/'
+        'NAME': url.path[1:],
         'USER': url.username,
         'PASSWORD': url.password,
         'HOST': url.hostname,
         'PORT': url.port,
     }
 }
+
 # Caching settings
 CACHES = {
     "default": {
