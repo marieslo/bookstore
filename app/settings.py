@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv  # type: ignore
 from urllib.parse import urlparse
+from django.core.exceptions import ImproperlyConfigured
 
 # Load environment variables from .env file
 load_dotenv()
@@ -70,9 +71,9 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 if DATABASE_URL is None:
-    raise ImproperlyConfigured("DATABASE_URL environment variable is not set") # type: ignore
+    raise ImproperlyConfigured("DATABASE_URL environment variable is not set")
 
-# Parse the DATABASE_URL and update the DATABASES setting
+
 url = urlparse(DATABASE_URL)
 
 DATABASES = {
@@ -85,7 +86,6 @@ DATABASES = {
         'PORT': url.port,
     }
 }
-
 # Caching settings
 CACHES = {
     "default": {
