@@ -25,7 +25,7 @@ RUN pip install -r requirements.txt
 EXPOSE 8000
 
 
-ENV DJANGO_SETTINGS_MODULE=bookstore.settings
+ENV DJANGO_SETTINGS_MODULE=app.settings
 
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
